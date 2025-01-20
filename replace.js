@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         字典替换文本并影响输入框（带油猴设置页面）
+// @name         替换文本
 // @namespace    https://example.com/
-// @version      1.1
-// @description  根据字典中的键替换页面中的文本内容，并可影响输入框中的内容，支持自定义设置
-// @author       You
+// @version      1.0
+// @description  可影响输入框中的内容，支持自定义设置
+// @author       Laiyoi
 // @match        *://*/*
 // @grant        GM_setValue
 // @grant        GM_getValue
