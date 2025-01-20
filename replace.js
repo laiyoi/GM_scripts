@@ -2,7 +2,7 @@
 // @name         替换文本
 // @license      MIT
 // @namespace    https://github.com/laiyoi/GM_scripts
-// @version      1.0.1
+// @version      1.0.2
 // @description  可影响输入框中的内容，支持自定义设置
 // @author       llaiyoi
 // @match        *://*/*
@@ -40,12 +40,13 @@ function showSettingBox() {
         <input type="text" id="value" placeholder="输入替换文本" />
       </div>
       <button id="addEntry">添加替换</button>
-      <button id="importSettings">导入设置</button>
-      <button id="exportSettings">导出设置</button>
-      <button id="closeSettings">关闭</button>
       <div>
         <h4>当前替换项</h4>
         <ul id="dictionaryList"></ul>
+      </div>
+      <div>
+        <button id="importSettings">导入设置</button>
+        <button id="exportSettings">导出设置</button>
       </div>
     </div>
   `;
@@ -71,7 +72,6 @@ function showSettingBox() {
   const valueInput = document.getElementById("value");
   const dictionaryList = document.getElementById("dictionaryList");
   const addButton = document.getElementById("addEntry");
-  const closeButton = document.getElementById("closeSettings");
   const affectInputCheckbox = document.getElementById("S-Affect-Input");
 
   // 更新显示的字典列表
@@ -106,11 +106,6 @@ function showSettingBox() {
       valueInput.value = "";
       updateDictionaryList();
     }
-  });
-
-  // 关闭设置页面
-  closeButton.addEventListener("click", () => {
-    Swal.close();
   });
 
   // 导出设置为JSON（不包含 affectInput）

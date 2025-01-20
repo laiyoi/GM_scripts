@@ -2,9 +2,9 @@
 // @name         检测关键词并跳转到自定义网址
 // @license      MIT
 // @namespace    https://github.com/laiyoi/GM_scripts
-// @version      1.0
+// @version      1.0.1
 // @description  检测特定关键词并跳转到指定网址
-// @author       llaiyoi
+// @author       laiyoi
 // @match        *://*/*
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -52,6 +52,10 @@
             <input type="text" id="quickOptionUrl" placeholder="预设网址" />
             <button id="addQuickOption">添加预设</button>
             <ul id="quickOptionList"></ul>
+          </div>
+          <div>
+            <button id="importSettings">导入设置</button>
+            <button id="exportSettings">导出设置</button>
           </div>
         </div>
       `;
@@ -172,7 +176,62 @@
         isInSettingPage = false; // 设置为不在设置页面
         Swal.close();
       });
-  
+      
+      // 导出设置为JSON（不包含 affectInput）
+      document.getElementById("exportSettings").addEventListener("click", () => {
+        const settingsJSON = JSON.stringify({ keywordUrlMapping, quickUrls }); // 只导出字典
+        const blob = new Blob([settingsJSON], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "settings.json";
+        a.click();
+      });
+
+      // 导入设置（不影响 affectInput）
+      document.getElementById("importSettings").addEventListener("click", () => {
+        Swal.fire({
+          title: '选择导入文件',
+          input: 'file',
+          inputAttributes: {
+            accept: '.json',
+            'aria-label': 'Upload your settings'
+          },
+          showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed && result.value) {
+            const file = result.value;
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+              try {
+                const importedSettings = JSON.parse(event.target.result);
+    
+                // 校验导入内容是否包含字典
+                if (importedSettings.hasOwnProperty('keywordUrlMapping')) {
+                  // 合并导入的字典到现有字典中
+                  keywordUrlMapping = { ...keywordUrlMapping, ...importedSettings.keywordUrlMapping };
+                  quickUrls = { ...quickUrls, ...importedSettings.quickUrls };
+                  updateDictionaryList(); // 更新显示的字典列表
+                  updateQuickOptionList(); // 更新显示的预设列表
+                  Swal.fire('设置已成功导入！');
+                } else {
+                  throw new Error('导入的文件格式不正确');
+                }
+              } catch (error) {
+                Swal.fire('导入失败', `错误信息：${error.message}`, 'error');
+              }
+            };
+    
+            reader.onerror = function() {
+              Swal.fire('导入失败', '文件读取错误，请确保文件格式正确', 'error');
+            };
+    
+            reader.readAsText(file);
+          }
+        });
+      });
+
       // 初始化页面显示字典和预设
       updateDictionaryList();
       updateQuickOptionList();
