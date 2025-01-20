@@ -4,7 +4,7 @@
 // @namespace    https://github.com/laiyoi/GM_scripts
 // @version      1.0
 // @description  检测特定关键词并跳转到指定网址
-// @author       Laiyoi
+// @author       llaiyoi
 // @match        *://*/*
 // @grant        GM_setValue
 // @grant        GM_getValue
