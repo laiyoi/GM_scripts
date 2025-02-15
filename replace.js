@@ -4,7 +4,7 @@
 // @namespace    https://github.com/laiyoi/GM_scripts
 // @version      1.0.2
 // @description  可影响输入框中的内容，支持自定义设置
-// @author       llaiyoi
+// @author       laiyoi
 // @match        *://*/*
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -77,22 +77,41 @@ function showSettingBox() {
   // 更新显示的字典列表
   function updateDictionaryList() {
     dictionaryList.innerHTML = "";
+  
+    // Create a wrapper for the dictionary list to make it scrollable
+    const scrollWrapper = document.createElement("div");
+    scrollWrapper.style.maxHeight = "300px"; // Limit the height of the dictionary list
+    scrollWrapper.style.overflowY = "auto"; // Enable vertical scrolling if content overflows
+    scrollWrapper.style.paddingRight = "5px"; // Add some space for scrollbar
+  
     for (const [key, value] of Object.entries(dictionary)) {
       const listItem = document.createElement("li");
-      listItem.textContent = `${key} → ${value}`;
       
-      // 创建删除按钮
+      // Compact display: use a shorter format
+      listItem.textContent = `${key} → ${value}`;
+  
+      // Create delete button
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "删除";
       deleteButton.style.marginLeft = "10px";
+      deleteButton.style.fontSize = "0.8em"; // Reduce button size
       deleteButton.addEventListener("click", () => {
         delete dictionary[key];
         updateDictionaryList(); // 更新显示的字典列表
       });
-      
+  
+      // Append delete button and the list item
       listItem.appendChild(deleteButton);
-      dictionaryList.appendChild(listItem);
+  
+      // Style list items for more compact display
+      listItem.style.display = "flex"; // Use flexbox for compact layout
+      listItem.style.justifyContent = "space-between"; // Space between text and delete button
+      listItem.style.marginBottom = "5px"; // Reduce spacing between items
+  
+      scrollWrapper.appendChild(listItem); // Add list item to the scrollable container
     }
+  
+    dictionaryList.appendChild(scrollWrapper); // Add the scrollable wrapper to the dictionary list container
   }
 
   // 添加替换项
