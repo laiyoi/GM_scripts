@@ -188,6 +188,16 @@ function showSettingBox() {
 
 // 替换页面中的文本
 function replacer(str) {
+  const dictionary_ = {
+    '湖人': '凯尔特人',
+    '豆包': '董斌',
+  }
+  // prereplace
+  for (const [key_, value_] of Object.entries(dictionary_)) {
+    const regex_ = new RegExp(key_, 'g');
+    str = str.replace(regex_, value_);
+  }
+
   for (const [key, value] of Object.entries(dictionary)) {
     const regex = new RegExp(key, 'g');
     str = str.replace(regex, value);
@@ -210,6 +220,7 @@ const elementToMatch = [
   "li",
   "a",
   "CC",
+  "span",
 ];
 
 // 替换页面中的文本内容
