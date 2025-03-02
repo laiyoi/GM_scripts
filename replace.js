@@ -2,7 +2,7 @@
 // @name         替换文本
 // @license      MIT
 // @namespace    https://github.com/laiyoi/GM_scripts
-// @version      1.0.3
+// @version      1.0.4
 // @description  可影响输入框中的内容，支持自定义设置
 // @author       laiyoi
 // @match        *://*/*
