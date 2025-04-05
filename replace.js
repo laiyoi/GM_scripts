@@ -189,8 +189,9 @@ function showSettingBox() {
 // 替换页面中的文本
 function replacer(str) {
   const dictionary_ = {
-    '湖人': '凯尔特人',
+    '湖人': '科比',
     '豆包': '董斌',
+    '超越': '超载',
   }
   // prereplace
   for (const [key_, value_] of Object.entries(dictionary_)) {
