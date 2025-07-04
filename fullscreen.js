@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         亿云校回放网页全屏
 // @namespace    https://github.com/laiyoi/GM_scripts
+// @license      MIT
 // @version      1.0.0
 // @author       laiyoi
 // @description  类似 Bilibili 的网页全屏，视频垂直高度居中显示，自动裁剪左右宽度。完美兼容云校2x1920x1080的屏幕
